@@ -20,14 +20,21 @@ class MovieAPI extends RESTDataSource {
       : [];
   }
 
-  movieReducer(movie) {
+  async getRunningMovies() {
+    const response = await this.get('now_playing');
+    return Array.isArray(response.results)
+      ? response.results.map(movie => this.movieReducer(movie, true))
+      : [];
+  }
+
+  movieReducer(movie, running = false) {
     return {
       id: movie.id,
       homepage: movie.homepage || "",
       title: movie.title,
       releaseDate: movie.release_date,
       posterUrl: `https://image.tmdb.org/t/p/w185//${movie.poster_path}`,
-      running : false
+      running : running
     };
   }
 }

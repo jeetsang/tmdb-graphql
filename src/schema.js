@@ -11,11 +11,16 @@ const typeDefs = gql`
     running : Boolean!
   }
 
-  
+  type Dashboard {
+      running: [Movie]!
+      upcoming: [Movie]!
+  }
+
 
   type Query {
-  movies: [Movie]!
-  movie(id: ID!): Movie
+  upcoming: [Movie]
+  running: [Movie]
+  dashboard: Dashboard
 }
 `;
 

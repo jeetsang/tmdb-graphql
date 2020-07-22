@@ -1,6 +1,19 @@
+const { Promise } = require("sequelize");
+
 module.exports = {
     Query: {
-      movies: (_, __, { dataSources }) =>
-        dataSources.movieAPI.getUpcomingMovies(),
+        upcoming: (_, __, { dataSources }) =>
+            dataSources.movieAPI.getUpcomingMovies(),
+        running: (_, __, { dataSources }) =>
+            dataSources.movieAPI.getRunningMovies(),
+        dashboard: async (_, __, { dataSources }) => {
+            const responses = await Promise.all([dataSources.movieAPI.getRunningMovies(), dataSources.movieAPI.getUpcomingMovies()])
+            return {
+                running: responses[0],
+                upcoming: responses[1],
+            }
+
+        },
+
     }
-  };
+};
