@@ -11,7 +11,14 @@ const typeDefs = gql`
     running : Boolean!
   }
 
+  type Profile {
+      name: String!
+      preferences: [String]!
+      score: Int
+  }
+
   type Dashboard {
+      profile: Profile!
       running: [Movie]!
       upcoming: [Movie]!
   }
